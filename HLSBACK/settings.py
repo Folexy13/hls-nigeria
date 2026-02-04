@@ -10,7 +10,7 @@ env = Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 Env.read_env(os.path.join(BASE_DIR, '.env'))
-ENVIRONMENT = env('ENVIRONMENT', default='production')
+ENVIRONMENT = env('ENVIRONMENT', default='development')
 
 
 # Quick-start development settings - unsuitable for production
@@ -20,7 +20,7 @@ ENVIRONMENT = env('ENVIRONMENT', default='production')
 SECRET_KEY = env('SECRET_KEY')
 
 if ENVIRONMENT == "development":
-    PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY_TEST')
+    PAYSTACK_SECRET_KEY = 'sk_test_accd9e759dcf29e72d8ed562fa0d972265e5861' #env('PAYSTACK_SECRET_KEY_TEST')
 else:
     PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY_PROD')
 

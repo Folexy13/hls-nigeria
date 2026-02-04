@@ -1,7 +1,6 @@
 
 from pathlib import Path
 import os
-import django_heroku
 from environ import Env
 
 from datetime import timedelta

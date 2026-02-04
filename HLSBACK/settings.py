@@ -64,7 +64,7 @@ CSRF_ALLOWED_ORIGINS = [
     "https://hls.com.ng",           # Your main domain
     "https://www.hls.com.ng",
     "https://hlsnew.netlify.app",
-    "https://hls-vr1z.onrender.com"  
+    "https://hls-vr1z.onrender.com", 
     "http://localhost:5173"
 ]
 
@@ -221,7 +221,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR , 'static'),]
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 # MEDIA_URL = 'media/'

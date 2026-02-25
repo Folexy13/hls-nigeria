@@ -47,20 +47,23 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         products_with_missing_images = []
 
         # Get the list of image keys from S3
-        s3 = boto3.client('s3', aws_access_key_id='AKIATFBMO53EKIXSNNUY',aws_secret_access_key='vf+xxthS0G7T4l37rtvmYdzhiR4yEZQS3yXHIfsz')
         image_keys = []
-        bucket_name = 'hlsnigeriabucket'  # Replace with your actual bucket name
-        prefix = 'product_image'
-        kwargs = {'Bucket': bucket_name, 'Prefix': prefix}
+        try:
+            s3 = boto3.client('s3', aws_access_key_id='AKIATFBMO53EKIXSNNUY',aws_secret_access_key='vf+xxthS0G7T4l37rtvmYdzhiR4yEZQS3yXHIfsz')
+            bucket_name = 'hlsnigeriabucket'  # Replace with your actual bucket name
+            prefix = 'product_image'
+            s3_kwargs = {'Bucket': bucket_name, 'Prefix': prefix}
 
-        while True:
-            response = s3.list_objects_v2(**kwargs)
-            image_keys.extend([obj['Key'] for obj in response.get('Contents', [])])
+            while True:
+                response = s3.list_objects_v2(**s3_kwargs)
+                image_keys.extend([obj['Key'] for obj in response.get('Contents', [])])
 
-            try:
-                kwargs['ContinuationToken'] = response['NextContinuationToken']
-            except KeyError:
-                break
+                try:
+                    s3_kwargs['ContinuationToken'] = response['NextContinuationToken']
+                except KeyError:
+                    break
+        except Exception as e:
+            print(f"S3 Error: {e}")
 
         for product in unique_products:
             if product.main_image in image_keys:

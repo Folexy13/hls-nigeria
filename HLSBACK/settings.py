@@ -30,11 +30,14 @@ else:
 CORS_ALLOWED_ORIGINS  = [
     'https://hlsnigeria-e0c4b5df87f5.herokuapp.com',  # Your Heroku deployment
     'http://localhost:5173',  # Localhost for testing on local development server
+    'http://localhost:3000',  # Frontend Docker container
+    'http://localhost:3001',  # Researcher app Docker container
+    'http://localhost:3002',  # Old frontend Docker container
     'https://hls.com.ng',  # Production or main domain if hosted here
     'https://www.hls.com.ng',
     'https://hlsnew.netlify.app',
-    'http://localhost:5173',
-    'https://hls-vr1z.onrender.com'  # Render deployment domain
+    'https://hls-vr1z.onrender.com',  # Render deployment domain
+    'https://hlsresearcher.netlify.app',
 ]
 
 CORS_ALLOW_METHODS = [
@@ -65,7 +68,11 @@ CSRF_ALLOWED_ORIGINS = [
     "https://www.hls.com.ng",
     "https://hlsnew.netlify.app",
     "https://hls-vr1z.onrender.com", 
-    "http://localhost:5173"
+    "https://hlsresearcher.netlify.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
 ]
 
 CORS_ORIGINS_WHITELIST = [
@@ -73,14 +80,23 @@ CORS_ORIGINS_WHITELIST = [
     "https://www.hls.com.ng",
     "https://hlsnew.netlify.app",
     "https://hls-vr1z.onrender.com",
-    "http://localhost:5173"
+    "https://hlsresearcher.netlify.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://hls.com.ng",           # Your main domain
     "https://www.hls.com.ng",
-    "https://hls-vr1z.onrender.com"  # Render deployment domain
-    "http://localhost:5173"
+    "https://hls-vr1z.onrender.com",  # Render deployment domain
+    "https://hlsresearcher.netlify.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "https://cc3b-102-89-82-37.ngrok-free.app",  # Allow any subdomain of ngrok-free.app
 ]
 
 CSRF_COOKIE_SECURE = True  # Ensures cookie is only sent over HTTPS
@@ -259,8 +275,12 @@ LOGIN_REDIRECT_URL = 'home:home'
 
 LOGIN_URL = 'user:login'
 
-ALLOWED_HOSTS = [".vercel.app"]
+DEBUG = env.bool('DEBUG', default=True)
 
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]  # Allow all hosts in development
+else:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".ngrok-free.app", ".netlify.app", ".vercel.app"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # SMTP server for Gmail
@@ -272,4 +292,5 @@ DEFAULT_FROM_EMAIL = 'folajimiopeyemisax13@gmail.com'  # Same email as EMAIL_HOS
 
 # dont forget admin honeypot
 # ACCOUNT_USERNAME_BLACKLIST = ['admin', 'sakamanje']
+
 
